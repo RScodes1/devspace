@@ -2,6 +2,9 @@ const express = require("express");
 const { authMiddleware } = require("../middlewares/auth.middleware");
 const { rbac } = require("../middlewares/rbac.middleware");
 const { createProject, getProject, updateProject, deleteProject } = require("../controllers/project.controller");
+const { validateBody } = require("../middlewares/validate.middleware");
+const { createProjectSchema } = require("../validations/project.schema");
+const { projectContext } = require("../middlewares/projectContext.middleware");
 
 const router = express.Router();
 
@@ -12,7 +15,7 @@ const router = express.Router();
  *     summary: Create a new project
  *     tags: [Projects]
  */
-router.post("/", authMiddleware, rbac(["Owner"]), createProject);
+router.post("/", validateBody(createProjectSchema), createProject); // done
 
 /**
  * @swagger
@@ -21,7 +24,7 @@ router.post("/", authMiddleware, rbac(["Owner"]), createProject);
  *     summary: Get project by ID
  *     tags: [Projects]
  */
-router.get("/:id", authMiddleware, getProject);
+router.get("/:id",  projectContext, rbac(["Owner"]), getProject); // done 
 
 /**
  * @swagger
@@ -30,7 +33,7 @@ router.get("/:id", authMiddleware, getProject);
  *     summary: Update project
  *     tags: [Projects]
  */
-router.put("/:id", authMiddleware, rbac(["Owner"]), updateProject);
+router.put("/:id",  projectContext, rbac(["Owner"]), updateProject); // done 
 
 /**
  * @swagger
@@ -39,6 +42,6 @@ router.put("/:id", authMiddleware, rbac(["Owner"]), updateProject);
  *     summary: Delete project
  *     tags: [Projects]
  */
-router.delete("/:id", authMiddleware, rbac(["Owner"]), deleteProject);
+router.delete("/:id",  projectContext, rbac(["Owner"]), deleteProject); // done
 
 module.exports = router;

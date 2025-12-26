@@ -1,20 +1,21 @@
-const db = require("../config/postgres");
+const {pool} = require("../config/postgres");
 
-const createWorkspaceService = async (data, userId) => {
-  const result = await db.query(
-    "INSERT INTO workspaces (name, project_id, owner_id) VALUES ($1, $2, $3) RETURNING *",
-    [data.name, data.projectId, userId]
+const createWorkspaceService = async (name, projectId) => {
+
+  const result = await pool.query(
+    "INSERT INTO workspaces (name, project_id) VALUES ($1, $2) RETURNING *",
+    [name, projectId]
   );
   return result.rows[0];
 };
 
 const getWorkspaceService = async (workspaceId) => {
-  const result = await db.query("SELECT * FROM workspaces WHERE id=$1", [workspaceId]);
+  const result = await pool.query("SELECT * FROM workspaces WHERE id=$1", [workspaceId]);
   return result.rows[0];
 };
 
 const updateWorkspaceService = async (workspaceId, data) => {
-  const result = await db.query(
+  const result = await pool.query(
     "UPDATE workspaces SET name=$1 WHERE id=$2 RETURNING *",
     [data.name, workspaceId]
   );
@@ -22,7 +23,7 @@ const updateWorkspaceService = async (workspaceId, data) => {
 };
 
 const deleteWorkspaceService = async (workspaceId) => {
-  await db.query("DELETE FROM workspaces WHERE id=$1", [workspaceId]);
+  await pool.query("DELETE FROM workspaces WHERE id=$1", [workspaceId]);
   return true;
 };
 

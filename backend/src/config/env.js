@@ -1,8 +1,10 @@
 const dotenv = require("dotenv");
 const Joi = require("joi");
-
+const path = require('path')
 // Load environment variables
 dotenv.config();
+
+dotenv.config({ path: path.join(__dirname, '/backend/.env') })
 
 /**
  * Environment variable schema
@@ -13,7 +15,7 @@ const envSchema = Joi.object({
     .valid("development", "test", "production")
     .default("development"),
 
-  PORT: Joi.number().default(5000),
+  PORT: Joi.number().default(4500),
 
   // Auth
   JWT_SECRET: Joi.string().min(10).required(),

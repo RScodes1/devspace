@@ -1,10 +1,10 @@
 const { env } = require("../src/config/env");
 const { redisClient } = require("../src/config/redis");
-const db = require("../src/config/postgres");
+const pool = require("../src/config/postgres");
 
 beforeAll(async () => {
   // Connect to Postgres
-  await db.connect();
+  await pool.connect();
 
   // Connect to Redis
   await redisClient.connect();
@@ -14,7 +14,7 @@ beforeAll(async () => {
 
 afterAll(async () => {
   // Disconnect Postgres
-  await db.end();
+  await pool.end();
 
   // Disconnect Redis
   await redisClient.quit();

@@ -2,6 +2,7 @@ const express = require("express");
 const { body } = require("express-validator");
 const { login, signup, refreshToken } = require("../controllers/auth.controller");
 const { validateBody } = require("../middlewares/validate.middleware");
+const { signupSchema, loginSchema } = require("../validations/auth.schema");
 
 const router = express.Router();
 
@@ -14,11 +15,9 @@ const router = express.Router();
  */
 router.post(
   "/signup",
-  validateBody(
-    body().isObject().withMessage("Body must be an object")
-  ),
+  validateBody(signupSchema),
   signup
-);
+); // done
 
 /**
  * @swagger
@@ -29,11 +28,9 @@ router.post(
  */
 router.post(
   "/login",
-  validateBody(
-    body().isObject().withMessage("Body must be an object")
-  ),
+  validateBody(loginSchema),
   login
-);
+); // done 
 
 /**
  * @swagger
@@ -42,6 +39,11 @@ router.post(
  *     summary: Refresh JWT token
  *     tags: [Auth]
  */
-router.post("/refresh", refreshToken);
+router.post("/refresh", refreshToken); // done
 
 module.exports = router;
+
+ // user - done 
+ // project - done 
+ // workspace - done 
+ // 

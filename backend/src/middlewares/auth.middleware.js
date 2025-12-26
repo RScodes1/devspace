@@ -1,6 +1,6 @@
 const jwt = require("jsonwebtoken");
 const { env } = require("../config/env");
-const { getUserById } = require("../models/user.model");
+const { getUserById } = require("../services/user.service");
 
 const authMiddleware = async (req, res, next) => {
   try {
@@ -17,9 +17,10 @@ const authMiddleware = async (req, res, next) => {
       return res.status(401).json({ success: false, message: "Unauthorized" });
     }
 
-    req.user = { id: user.id, role: user.role, email: user.email };
+    req.user = { id: user.id, email: user.email };
     next();
   } catch (err) {
+    console.log(err);
     return res.status(401).json({ success: false, message: "Invalid token" });
   }
 };

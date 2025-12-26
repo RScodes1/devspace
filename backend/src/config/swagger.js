@@ -16,7 +16,7 @@ const swaggerOptions = {
     },
     servers: [
       {
-        url: env.API_BASE_URL || "http://localhost:5000/api/v1",
+        url: env.API_BASE_URL || "http://localhost:4500/api/v1",
         description: "API Server"
       }
     ],

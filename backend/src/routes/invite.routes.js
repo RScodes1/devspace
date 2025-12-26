@@ -5,8 +5,8 @@ const { createInvite, getInvites, acceptInvite } = require("../controllers/invit
 
 const router = express.Router();
 
-router.post("/", authMiddleware, rbac(["Owner"]), createInvite);
-router.get("/:projectId", authMiddleware, rbac(["Owner", "Collaborator"]), getInvites);
-router.post("/accept", authMiddleware, acceptInvite);
+router.post("/",  rbac(["Owner"]), createInvite);
+router.get("/projects/:projectId/invites",  rbac(["Owner", "Collaborator"]), getInvites);
+router.post("/accept",  acceptInvite);
 
 module.exports = router;

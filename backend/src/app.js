@@ -3,8 +3,8 @@ const express = require("express");
 const cors = require("./config/cors");
 const swaggerUi = require("swagger-ui-express");
 const swaggerSpec = require("./config/swagger");
-const { rateLimiter } = require("./config/rateLimiter");
-const { errorHandler } = require("./middlewares/error.middleware");
+const { apiRateLimiter, authRateLimiter } = require("./config/rateLimiter");
+const { errorMiddleware } = require("./middlewares/error.middleware");
 const { authMiddleware } = require("./middlewares/auth.middleware");
 
 // Route imports
@@ -19,7 +19,7 @@ const app = express();
 // Middlewares
 app.use(cors);
 app.use(express.json());
-app.use(rateLimiter);
+app.use(apiRateLimiter);
 
 // Swagger Docs
 app.use("/api/docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
@@ -27,12 +27,12 @@ app.use("/api/docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 // Routes
 app.use("/api/auth", authRoutes);
 app.use("/api/projects", authMiddleware, projectRoutes);
-app.use("/api/workspaces", authMiddleware, workspaceRoutes);
+app.use("/api/projects/:projectId/workspaces", authMiddleware, workspaceRoutes);
 app.use("/api/invites", authMiddleware, inviteRoutes);
-app.use("/api/memberships", authMiddleware, membershipRoutes);
+app.use("/api/projects/:projectId/members", authMiddleware, membershipRoutes);
 
 // Error handler
-app.use(errorHandler);
+app.use(errorMiddleware);
 
 module.exports = app;
 

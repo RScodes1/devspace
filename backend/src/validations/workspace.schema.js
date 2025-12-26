@@ -1,13 +1,22 @@
-const { body, param } = require("express-validator");
+const Joi = require("joi");
 
-const createWorkspaceSchema = [
-  body("name").notEmpty().withMessage("Workspace name is required"),
-  body("projectId").notEmpty().withMessage("Project ID is required"),
-];
+/**
+ * Create Workspace
+ */
+const createWorkspaceSchema = Joi.object({
+  name: Joi.string().trim().min(1).required().messages({
+    "string.empty": "Workspace name is required"
+  })
+});
 
-const updateWorkspaceSchema = [
-  param("id").notEmpty().withMessage("Workspace ID is required"),
-  body("name").optional().isString(),
-];
+/**
+ * Update Workspace
+ */
+const updateWorkspaceSchema = Joi.object({
+  name: Joi.string().optional()
+});
 
-module.exports = { createWorkspaceSchema, updateWorkspaceSchema };
+module.exports = {
+  createWorkspaceSchema,
+  updateWorkspaceSchema
+};

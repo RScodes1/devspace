@@ -2,7 +2,7 @@ const { createWorkspaceService, getWorkspaceService, updateWorkspaceService, del
 
 const createWorkspace = async (req, res, next) => {
   try {
-    const workspace = await createWorkspaceService(req.body, req.user.id);
+    const workspace = await createWorkspaceService(req.body.name, req.params.projectId);
     res.status(201).json({ success: true, workspace });
   } catch (err) {
     next(err);

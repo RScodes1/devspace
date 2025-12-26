@@ -1,4 +1,4 @@
-const Activity = require("../models/activity.model");
+const {activityModel} = require("../models/activity.model");
 
 const socketHandlers = (io, socket) => {
   console.log(`🔹 User connected: ${socket.id}`);
@@ -20,7 +20,7 @@ const socketHandlers = (io, socket) => {
   // File change / cursor updates
   socket.on("activity", async ({ workspaceId, userId, type, payload }) => {
     // Save activity in Mongo
-    const activity = new Activity({ workspaceId, userId, type, payload });
+    const activity = new activityModel({ workspaceId, userId, type, payload });
     await activity.save();
 
     // Broadcast to workspace

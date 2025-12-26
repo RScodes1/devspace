@@ -1,7 +1,7 @@
-const db = require("../config/postgres");
+const {pool} = require("../config/postgres");
 
 const addMemberService = async ({ userId, projectId, role }) => {
-  const result = await db.query(
+  const result = await pool.query(
     "INSERT INTO memberships (user_id, project_id, role) VALUES ($1, $2, $3) RETURNING *",
     [userId, projectId, role]
   );
@@ -9,7 +9,7 @@ const addMemberService = async ({ userId, projectId, role }) => {
 };
 
 const updateRoleService = async (membershipId, role) => {
-  const result = await db.query(
+  const result = await pool.query(
     "UPDATE memberships SET role=$1 WHERE id=$2 RETURNING *",
     [role, membershipId]
   );
@@ -17,7 +17,7 @@ const updateRoleService = async (membershipId, role) => {
 };
 
 const removeMemberService = async (membershipId) => {
-  await db.query("DELETE FROM memberships WHERE id=$1", [membershipId]);
+  await pool.query("DELETE FROM memberships WHERE id=$1", [membershipId]);
   return true;
 };
 

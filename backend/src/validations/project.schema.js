@@ -1,14 +1,25 @@
-const { body, param } = require("express-validator");
+const Joi = require("joi");
 
-const createProjectSchema = [
-  body("name").notEmpty().withMessage("Project name is required"),
-  body("description").optional().isString(),
-];
+/**
+ * Create Project
+ */
+const createProjectSchema = Joi.object({
+  name: Joi.string().trim().min(1).required().messages({
+    "string.empty": "Project name is required"
+  }),
+  description: Joi.string().optional()
+});
 
-const updateProjectSchema = [
-  param("id").notEmpty().withMessage("Project ID is required"),
-  body("name").optional().isString(),
-  body("description").optional().isString(),
-];
+/**
+ * Update Project
+ * `id` should be validated separately (params)
+ */
+const updateProjectSchema = Joi.object({
+  name: Joi.string().optional(),
+  description: Joi.string().optional()
+});
 
-module.exports = { createProjectSchema, updateProjectSchema };
+module.exports = {
+  createProjectSchema,
+  updateProjectSchema
+};
