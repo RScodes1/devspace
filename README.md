@@ -61,12 +61,12 @@ MONGO_URI=<mongo-url>
 REDIS_URL=<redis-url>
 CORS_ORIGINS=*
 
-5. Run Migrations
+4. Run Migrations
 ```bash
 node src/scripts/migrate.js
 ```
 
-6. Start Server 
+5. Start Server 
 ```bash
 npm run dev
 ```
