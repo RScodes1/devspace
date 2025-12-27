@@ -31,7 +31,6 @@ export const AuthProvider = ({ children }) => {
 
   const signup = async (data) => {
     const res = await signupApi(data);
-    console.log(res);
     return res;
   };
 

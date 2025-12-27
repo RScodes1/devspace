@@ -22,8 +22,19 @@ const removeMemberService = async (membershipId) => {
 };
 
 const getMembersService = async (userId,projectId) => {
-   const result = await pool.query("SELECT * FROM memberships WHERE id=$1 AND project_id=$2", [userId, projectId]);
-    console.log(result.rows);
+   const result = await pool.query(
+    `
+    SELECT
+      u.id AS user_id,
+      u.name,
+      u.email,
+      m.role
+    FROM memberships m
+    JOIN users u ON u.id = m.user_id
+    WHERE m.project_id = $1
+    `,
+    [projectId]
+  );
   return result.rows;
 }
 

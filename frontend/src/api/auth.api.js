@@ -8,3 +8,6 @@ export const loginApi = (data) =>
 
 export const refreshTokenApi = () =>
   api.post("/auth/refresh");
+
+export const getUsers = () => 
+  api.get("/auth/users")

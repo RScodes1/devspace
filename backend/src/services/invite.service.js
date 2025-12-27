@@ -4,18 +4,17 @@ const { pool } = require("../config/postgres");
  * Create an invite
  */
 const createInviteService = async (
-  { email, role, expiresAt }, projectId,
+  { id, email, role, expiresAt }, projectId,
   inviterId
 ) => {
-  // expires at need
-  console.log({email, role});
+ 
   const result = await pool.query(
     `
-    INSERT INTO invites (email, project_id, role)
-    VALUES ($1, $2, $3)
+    INSERT INTO invites (email, project_id, role, user_id)
+    VALUES ($1, $2, $3, $4)
     RETURNING *
     `,
-    [email, projectId, role || null]
+    [email, projectId, role || null, id]
   );
 
   return result.rows[0];
@@ -24,10 +23,10 @@ const createInviteService = async (
 /**
  * Get all invites for a project
  */
-const getInvitesService = async (projectId) => {
+const getProjectInvitesService = async (projectId, userId) => {
   const result = await pool.query(
-    "SELECT * FROM invites WHERE project_id = $1",
-    [projectId]
+    "SELECT * FROM invites WHERE project_id = $1 AND user_id=$2",
+    [projectId, userId]
   );
   return result.rows;
 };
@@ -84,8 +83,18 @@ const acceptInviteService = async (userId, userEmail) => {
   return membershipRes.rows[0];
 };
 
+
+const getInvitesService = async (userId) => {
+  const result = await pool.query(
+    "SELECT * FROM invites WHERE user_id=$1",
+    [userId]
+  );
+  return result.rows;
+};
+
 module.exports = {
   createInviteService,
   getInvitesService,
-  acceptInviteService
+  acceptInviteService,
+  getProjectInvitesService
 };

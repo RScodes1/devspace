@@ -8,7 +8,7 @@ import {
 import { getWorkspaces } from "../../api/workspace.api";
 import WorkspaceCard from "../../components/workspace/WorkspaceCard";
 import CreateWorkspaceModal from "../../components/workspace/CreateWorkspaceModal";
-import { inviteCollaborator } from "../../api/invite.api";
+import { inviteCollaborator, getInvites } from "../../api/invite.api";
 
 export default function ProjectDetails() {
   const { projectId } = useParams();
@@ -16,6 +16,8 @@ export default function ProjectDetails() {
   const [project, setProject] = useState(null);
   const [workspaces, setWorkspaces] = useState([]);
   const [members, setMembers] = useState([]);
+  const [pendingInvites, setPendingInvites] = useState([]);
+
 
   const [showWorkspaceModal, setShowWorkspaceModal] = useState(false);
   const [inviteEmail, setInviteEmail] = useState("");
@@ -25,6 +27,8 @@ export default function ProjectDetails() {
     fetchProject();
     fetchWorkspaces();
     fetchMembers();
+    fetchInvites();
+
   }, [projectId]);
 
   const fetchProject = async () => {
@@ -39,13 +43,19 @@ export default function ProjectDetails() {
 
   const fetchMembers = async () => {
     const res = await getProjectMembers(projectId);
-    console.log({res});
-    setMembers(res.data.members || []);
+    setMembers(res.data.data || []);
   };
+
+  const fetchInvites = async () => {
+  const res = await getInvites(projectId);
+  console.log({res});
+  setPendingInvites(res.data.invites || []);
+};
+
 
   const handleInvite = async () => {
     if (!inviteEmail) return;
-    await inviteCollaborator( inviteEmail, inviteRole , projectId);
+    await inviteCollaborator(inviteEmail, inviteRole , projectId);
     setInviteEmail("");
     fetchMembers();
   };
@@ -121,6 +131,7 @@ export default function ProjectDetails() {
               className="flex justify-between items-center border p-2 rounded"
             >
               <span>{m.email}</span>
+              <span>{m.name}</span>
 
               {project.user_role === "Owner" ? (
                 <select
@@ -140,6 +151,25 @@ export default function ProjectDetails() {
             </li>
           ))}
         </ul>
+
+            <h3 className="text-lg mt-2 font-semibold mb-2">Pending Invites</h3>
+
+        {project.user_role === "Owner" && pendingInvites.length > 0 && (
+          <div className="mt-6">
+            <ul className="space-y-2">
+              {pendingInvites.map((inv) => (
+                <li
+                  key={inv.id}
+                  className="flex justify-between items-center border p-2 rounded text-sm"
+                >
+                  <span>{inv.email}</span>
+                  <span className="text-gray-500">{inv.role}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+        )}
+
       </div>
 
       {showWorkspaceModal && (

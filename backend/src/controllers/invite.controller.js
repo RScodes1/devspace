@@ -1,6 +1,7 @@
 const {
   createInviteService,
   getInvitesService,
+  getProjectInvitesService,
   acceptInviteService
 } = require("../services/invite.service");
 
@@ -17,14 +18,23 @@ const createInvite = async (req, res, next) => {
   }
 };
 
-const getInvites = async (req, res, next) => {
+const getProjectInvites = async (req, res, next) => {
   try {
-    const invites = await getInvitesService(req.params.projectId);
+    const invites = await getProjectInvitesService(req.params.projectId, req.user.id);
     res.status(200).json({ success: true, invites });
   } catch (err) {
     next(err);
   }
 };
+
+const getInvites = async (req, res, next) => {
+    try {
+    const invites = await getInvitesService();
+    res.status(200).json({ success: true, invites });
+  } catch (err) {
+    next(err);
+  }
+}
 
 const acceptInvite = async (req, res, next) => {
   try {
@@ -38,4 +48,4 @@ const acceptInvite = async (req, res, next) => {
   }
 };
 
-module.exports = { createInvite, getInvites, acceptInvite };
+module.exports = { createInvite, getInvites, getProjectInvites,  acceptInvite };

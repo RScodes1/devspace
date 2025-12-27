@@ -1,4 +1,4 @@
-import { createContext, useContext, useEffect, useRef } from "react";
+import { createContext, useContext, useEffect, useRef, useState } from "react";
 import { io } from "socket.io-client";
 import { useAuth } from "../hooks/useAuth";
 
@@ -7,35 +7,49 @@ const SocketContext = createContext(null);
 export const SocketProvider = ({ children }) => {
   const { token } = useAuth();
   const socketRef = useRef(null);
+  const [socket, setSocket] = useState(null);
 
   useEffect(() => {
-    if (!token) return;
+    if (!token) {
+      setSocket(null);
+      return;
+    }
 
-    socketRef.current = io(import.meta.env.VITE_API_URL, {
+    const socketInstance = io(import.meta.env.VITE_API_URL, {
       auth: { token },
       path: "/realtime",
       transports: ["websocket"],
     });
 
-    socketRef.current.on("connect", () => {
-      console.log("🟢 Socket connected", socketRef.current.id);
+    socketRef.current = socketInstance;
+    setSocket(socketInstance);
+
+    socketInstance.on("connect", () => {
+      console.log("🟢 Socket connected", socketInstance.id);
     });
 
-    socketRef.current.on("disconnect", () => {
+    socketInstance.on("disconnect", () => {
       console.log("🔴 Socket disconnected");
     });
 
     return () => {
-      socketRef.current.disconnect();
+      socketInstance.disconnect();
       socketRef.current = null;
+      setSocket(null);
     };
   }, [token]);
 
   return (
-    <SocketContext.Provider value={socketRef.current}>
+    <SocketContext.Provider value={{ socket }}>
       {children}
     </SocketContext.Provider>
   );
 };
 
-export const useSocket = () => useContext(SocketContext);
+export const useSocket = () => {
+  const context = useContext(SocketContext);
+  if (!context) {
+    throw new Error("useSocket must be used within SocketProvider");
+  }
+  return context;
+};

@@ -37,4 +37,9 @@ const getUserById = async (id) => {
   return result.rows[0];
 };
 
-module.exports = { signupService, loginService, refreshTokenService, getUserById };
+const getUsers = async () => {
+  const result = await pool.query("SELECT id, name, email FROM users");
+  return result.rows;
+}
+
+module.exports = { signupService, loginService, refreshTokenService, getUserById, getUsers };

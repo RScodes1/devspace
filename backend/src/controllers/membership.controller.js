@@ -29,8 +29,8 @@ const removeMember = async (req, res, next) => {
 
 const getMembers = async (req, res, next) => {
   try { 
-    await getMembersService(req.user.id, req.params.projectId);
-    res.status(200).json({ success: true, message: "All members" });
+    const data = await getMembersService(req.user.id, req.params.projectId);
+    res.status(200).json({ success: true, message: "All members", data });
   } catch (err) {
      next(err);
   }

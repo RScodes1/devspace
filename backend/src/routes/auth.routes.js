@@ -3,6 +3,8 @@ const { body } = require("express-validator");
 const { login, signup, refreshToken } = require("../controllers/auth.controller");
 const { validateBody } = require("../middlewares/validate.middleware");
 const { signupSchema, loginSchema } = require("../validations/auth.schema");
+const { getUserById, getUsers } = require("../services/user.service");
+const { authMiddleware } = require("../middlewares/auth.middleware");
 
 const router = express.Router();
 
@@ -41,9 +43,5 @@ router.post(
  */
 router.post("/refresh", refreshToken); // done
 
+router.post("/users", authMiddleware, getUsers)
 module.exports = router;
-
- // user - done 
- // project - done 
- // workspace - done 
- // 

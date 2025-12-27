@@ -29,6 +29,9 @@ const { pool, connectPostgres, disconnectPostgres } = require("../src/config/pos
       );
     `);
 
+   
+
+
     // Workspaces
     await pool.query(`
       CREATE TABLE IF NOT EXISTS workspaces (
@@ -41,10 +44,7 @@ const { pool, connectPostgres, disconnectPostgres } = require("../src/config/pos
     `);
 
     // await pool.query(`
-    //  UPDATE invites
-    //     SET role = 'Collaborator'
-    //     WHERE role = 'collaborator';
-
+    // ALTER TABLE invites ADD COLUMN user_id INT REFERENCES users(id);
     //    `)
 
     // Memberships
