@@ -25,10 +25,6 @@ DevSpace backend is designed as a **production-grade REST + WebSocket service** 
 - **Docker** – containerized deployment
 - **Swagger / OpenAPI** – API documentation
 
-**High-Level Diagram (Optional)**
-
-
-
 Client
 
  HTTP REST + JWT
@@ -87,7 +83,7 @@ Swagger Docs: http://localhost:4500/api/docs
 WebSocket URL: ws://localhost:4500
 
 
-Design Decisions & Trade-offs
+## Design Decisions & Trade-offs
 
 Service Layer: Business logic separated into services for testability.
 
