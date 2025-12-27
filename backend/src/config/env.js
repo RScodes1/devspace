@@ -29,9 +29,9 @@ const envSchema = Joi.object({
   MONGO_URI: Joi.string().uri().required(),
 
   // Redis
-  REDIS_URL: Joi.string().uri.required(),
+  REDIS_URL: Joi.string().uri().required(),
 
-  POSTGRES_URL: Joi.string().uri.required(),
+  POSTGRES_URL: Joi.string().uri().required(),
 
   // CORS
   CORS_ORIGINS: Joi.string().allow("").optional(),
