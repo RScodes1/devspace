@@ -31,6 +31,7 @@ const envSchema = Joi.object({
   // Redis
   REDIS_URL: Joi.string().required(),
 
+  POSTGRES_URL:Joi.string().required(),
   // CORS
   CORS_ORIGINS: Joi.string().allow("").optional(),
 
@@ -46,7 +47,7 @@ const envSchema = Joi.object({
     .valid("error", "warn", "info", "debug")
     .default("info")
 })
-  .unknown(true); // allow extra env vars (cloud providers add many)
+  .unknown(true);
 
 /**
  * Validate environment
