@@ -36,11 +36,7 @@ Express API Server ── WebSocket ──> Socket.io Events
    Redis (Cache, Job Queue)
  BullMQ Worker (Async code execution)
 
-
- ```bash 
-
----
-
+ 
 ## Setup & Run Instructions
 
 ### 1. Clone the repository
