@@ -24,7 +24,7 @@ router.post("/", validateBody(createProjectSchema), createProject); // done
  *     summary: Get project by ID
  *     tags: [Projects]
  */
-router.get("/:id",  projectContext, rbac(["Owner"]), getProject); // done 
+router.get("/:id",  projectContext, rbac(["Owner", "Collaborator"]), getProject); // done 
 
 /**
  * @swagger

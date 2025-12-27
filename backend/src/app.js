@@ -28,7 +28,7 @@ app.use("/api/docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 app.use("/api/auth", authRoutes);
 app.use("/api/projects", authMiddleware, projectRoutes);
 app.use("/api/projects/:projectId/workspaces", authMiddleware, workspaceRoutes);
-app.use("/api/invites", authMiddleware, inviteRoutes);
+app.use("/api", authMiddleware, inviteRoutes);
 app.use("/api/projects/:projectId/members", authMiddleware, membershipRoutes);
 
 // Error handler

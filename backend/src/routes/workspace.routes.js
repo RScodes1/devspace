@@ -5,14 +5,15 @@ const { createWorkspace, getWorkspace, updateWorkspace, deleteWorkspace } = requ
 const { updateWorkspaceSchema, createWorkspaceSchema } = require("../validations/workspace.schema");
 const { validateBody } = require("../middlewares/validate.middleware");
 const { projectContext } = require("../middlewares/projectContext.middleware");
+const { executeCode, getExecutionStatus } = require("../controllers/workspaceExecution.controller");
 
 const router = express.Router({ mergeParams: true });
 
 router.post("/", projectContext, rbac(["Owner", "Collaborator"]), validateBody(createWorkspaceSchema), createWorkspace); // done 
 router.get("/:id",  projectContext, getWorkspace); // done 
-router.put("/:id",  projectContext, rbac(["Owner", "Collaborator"]), 
-// validateParams(workspaceIdParamSchema),
-validateBody(updateWorkspaceSchema), updateWorkspace); // done 
+router.put("/:id",  projectContext, rbac(["Owner", "Collaborator"]), validateBody(updateWorkspaceSchema), updateWorkspace); // done 
 router.delete("/:id", projectContext, rbac(["Owner"]),  deleteWorkspace); // done 
+router.post("/:id/execute", projectContext, rbac(["Owner", "Collaborator"]), executeCode );
+router.get("/jobs/:jobId", getExecutionStatus);
 
 module.exports = router;

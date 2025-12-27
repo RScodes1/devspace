@@ -40,10 +40,12 @@ const { pool, connectPostgres, disconnectPostgres } = require("../src/config/pos
       );
     `);
 
-    await pool.query(`
-      ALTER TABLE projects ADD COLUMN 
-        description VARCHAR(100) NULL
-       `)
+    // await pool.query(`
+    //  UPDATE invites
+    //     SET role = 'Collaborator'
+    //     WHERE role = 'collaborator';
+
+    //    `)
 
     // Memberships
     await pool.query(`
@@ -64,7 +66,7 @@ const { pool, connectPostgres, disconnectPostgres } = require("../src/config/pos
         id SERIAL PRIMARY KEY,
         email VARCHAR(100) NOT NULL,
         project_id INT REFERENCES projects(id) ON DELETE CASCADE,
-        role VARCHAR(20) NOT NULL CHECK (role IN ('owner','collaborator','viewer')),
+        role VARCHAR(20) NOT NULL CHECK (role IN ('Owner','Collaborator','Viewer')),
         expires_at TIMESTAMP,
         created_at TIMESTAMP DEFAULT NOW(),
         updated_at TIMESTAMP DEFAULT NOW(),
