@@ -27,7 +27,7 @@ Client
 
  HTTP REST + JWT
 
-Express API Server ── WebSocket ──> Socket.io Events
+Express API Server - WebSocket - Socket.io Events
 
  PostgreSQL (Projects, Memberships, Invites)
     MongoDB (Activity logs)
@@ -39,7 +39,7 @@ Express API Server ── WebSocket ──> Socket.io Events
 
 ### 1. Clone the repository
 ```bash
-git clone <your-repo-url>
+git clone [repo](https://github.com/RScodes1/devspace.git)
 cd backend
  ```
 
@@ -52,7 +52,7 @@ npm install
 
 Create a .env file (or use Render/Env config):
 
-NODE_ENV=development
+NODE_ENV=production
 PORT=4500
 JWT_SECRET=<your-jwt-secret>
 JWT_REFRESH_SECRET=<your-refresh-secret>
@@ -87,7 +87,7 @@ WebSocket URL: ws://localhost:4500
 
 - **WebSockets** : Real-time user presence, activity, cursor events.
 
-- **Database Choice**:
+ ### Database Choice 
 
 - **PostgreSQL** – relational data integrity.
 
