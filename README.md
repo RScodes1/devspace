@@ -85,23 +85,23 @@ WebSocket URL: ws://localhost:4500
 
 ## Design Decisions & Trade-offs
 
-Service Layer: Business logic separated into services for testability.
+- **Service Layer**: Business logic separated into services for testability.
 
-JWT Authentication: Stateless, scalable; allows token refresh.
+- **JWT Authentication**: Stateless, scalable; allows token refresh.
 
-RBAC: Owner, Collaborator, Viewer roles enforced via middleware.
+- **RBAC** : Owner, Collaborator, Viewer roles enforced via middleware.
 
-Async Jobs: BullMQ queue with Redis, retry logic, idempotency.
+- **Async Jobs**: BullMQ queue with Redis, retry logic, idempotency.
 
-WebSockets: Real-time user presence, activity, cursor events.
+- **WebSockets** : Real-time user presence, activity, cursor events.
 
-Database Choice:
+- **Database Choice**:
 
-PostgreSQL – relational data integrity.
+- **PostgreSQL** – relational data integrity.
 
-MongoDB – flexible activity logging.
+- **MongoDB** – flexible activity logging.
 
-Redis – cache and queue performance.
+- **Redis** – cache and queue performance.
 
 Trade-offs:
 
