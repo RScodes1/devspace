@@ -9,9 +9,6 @@ const jobQueue = new Queue("jobQueue", {
   connection: { host: env.REDIS_HOST, port: env.REDIS_PORT },
 });
 
-/**
- * Add job to the queue with idempotency
- */
 const addJob = async (data) => {
   const jobId = crypto
     .createHash("sha256")

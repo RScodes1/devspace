@@ -4,7 +4,7 @@ const activitySchema = new mongoose.Schema(
   {
     workspaceId: { type: String, required: true },
     userId: { type: String },
-    type: { type: String, required: true }, // e.g., "file_change", "cursor_update"
+    type: { type: String, required: true },
     payload: { type: Object },
     createdAt: { type: Date, default: Date.now }
   },

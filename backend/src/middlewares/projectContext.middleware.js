@@ -1,27 +1,20 @@
 const { pool } = require("../config/postgres");
 
-/**
- * Resolves projectId from the request and loads user's project membership.
- * Supports:
- *  - /projects/:id
- *  - /projects/:projectId/*
- *  - /workspaces/:id
- */
 const projectContext = async (req, res, next) => {
   try {
     let projectId = null;
-    // 1️⃣ Nested project routes: /projects/:projectId/*
+    // Nested project routes: /projects/:projectId/*
  
     if (req.params.projectId) {
       projectId = req.params.projectId;
     }
 
-    // 2️⃣ Direct project routes: /projects/:id
+    // Direct project routes: /projects/:id
     else if (req.baseUrl.includes("/projects") && req.params.id) {
       projectId = req.params.id;
     }
 
-    // 3️⃣ Workspace routes: /workspaces/:id
+    // Workspace routes: /workspaces/:id
     else if (req.baseUrl.includes("/workspaces") && req.params.id) {
       const result = await pool.query(
         "SELECT project_id FROM workspaces WHERE id = $1",
@@ -39,7 +32,6 @@ const projectContext = async (req, res, next) => {
       projectId = result.rows[0].project_id;
     }
 
-    // ❌ Could not resolve projectId
     if (!projectId) {
       return res.status(400).json({
         success: false,
@@ -66,8 +58,7 @@ const projectContext = async (req, res, next) => {
 
     // 5️⃣ Attach context
     req.projectId = projectId;
-    req.membership = membershipResult.rows[0]; // { role }
-
+    req.membership = membershipResult.rows[0];
     next();
   } catch (error) {
     console.log(error);

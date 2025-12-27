@@ -7,11 +7,11 @@ const redis = new Redis(env.REDIS_URL, {
 });
 
 redis.on("connect", () => {
-  console.log("✅ Redis connected");
+  console.log("Redis connected");
 });
 
 redis.on("error", (err) => {
-  console.error("❌ Redis error", err);
+  console.error("Redis error", err);
 });
 
 /**
@@ -19,7 +19,7 @@ redis.on("error", (err) => {
  */
 const disconnectRedis = async () => {
   await redis.quit();
-  console.log("🛑 Redis disconnected");
+  console.log("Redis disconnected");
 };
 
 module.exports = {

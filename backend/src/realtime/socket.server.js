@@ -9,8 +9,7 @@ const initSocketServer = (server) => {
       origin: process.env.CORS_ORIGINS?.split(",") || "*",
       methods: ["GET", "POST"],
       credentials: true,
-    },
-    // path: "/realtime"  // optional: remove or make client match
+    }
   });
 
   // Redis adapter
@@ -20,7 +19,7 @@ const initSocketServer = (server) => {
     socketHandlers(io, socket);
   });
 
-  console.log("✅ Socket.IO server initialized");
+  console.log("Socket.IO server initialized");
 
   return io;
 };

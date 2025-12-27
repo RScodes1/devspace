@@ -3,13 +3,10 @@ const RedisStore = require("rate-limit-redis").default;
 const { redis } = require("./redis");
 const { env } = require("./env");
 
-/**
- * Global API rate limiter
- * Protects against abuse, bots, brute force
- */
+
 const apiRateLimiter = rateLimit({
-  windowMs: env.RATE_LIMIT_WINDOW_MS, // e.g. 15 mins
-  max: env.RATE_LIMIT_MAX, // e.g. 100 requests
+  windowMs: env.RATE_LIMIT_WINDOW_MS,
+  max: env.RATE_LIMIT_MAX, 
   standardHeaders: true,
   legacyHeaders: false,
   store: new RedisStore({

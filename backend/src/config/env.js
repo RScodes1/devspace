@@ -1,15 +1,10 @@
 const dotenv = require("dotenv");
 const Joi = require("joi");
 const path = require('path')
-// Load environment variables
 dotenv.config();
 
 dotenv.config({ path: path.join(__dirname, '/backend/.env') })
 
-/**
- * Environment variable schema
- * Fail fast if anything critical is missing
- */
 const envSchema = Joi.object({
   NODE_ENV: Joi.string()
     .valid("development", "test", "production")
@@ -59,7 +54,7 @@ const envSchema = Joi.object({
 const { value: env, error } = envSchema.validate(process.env);
 
 if (error) {
-  console.error("❌ Environment variable validation error:");
+  console.error("Environment variable validation error:");
   console.error(error.message);
   process.exit(1);
 }

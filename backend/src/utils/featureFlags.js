@@ -3,9 +3,6 @@ const flags = {
   EXPERIMENTAL_CODE_RUN: false,
 };
 
-/**
- * Check if a feature is enabled
- */
 const isFeatureEnabled = (flagName) => {
   return flags[flagName] === true;
 };

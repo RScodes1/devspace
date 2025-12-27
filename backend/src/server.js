@@ -1,4 +1,4 @@
-// src/server.js
+
 const http = require("http");
 const app = require("./app");
 const { initSocketServer } = require("./realtime/socket.server");

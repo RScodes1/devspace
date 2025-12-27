@@ -12,12 +12,30 @@ const router = express.Router();
  *   post:
  *     summary: Create a new user
  *     tags: [Auth]
+ *     security: []
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             required: [name, email, password]
+ *             properties:
+ *               name:
+ *                 type: string
+ *               email:
+ *                 type: string
+ *               password:
+ *                 type: string
+ *     responses:
+ *       201:
+ *         description: User created
  */
+
 router.post(
   "/signup",
   validateBody(signupSchema),
   signup
-); // done
+);
 
 /**
  * @swagger
@@ -25,12 +43,32 @@ router.post(
  *   post:
  *     summary: Login user
  *     tags: [Auth]
+ *     security: [] 
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             required: [email, password]
+ *             properties:
+ *               email:
+ *                 type: string
+ *                 example: user@mail.com
+ *               password:
+ *                 type: string
+ *                 example: password123
+ *     responses:
+ *       200:
+ *         description: Login successful
+ *       401:
+ *         description: Invalid credentials
  */
 router.post(
   "/login",
   validateBody(loginSchema),
   login
-); // done 
+);
+
 
 /**
  * @swagger

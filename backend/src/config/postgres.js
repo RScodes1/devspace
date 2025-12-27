@@ -1,15 +1,6 @@
 const { Pool } = require("pg");
 const { env } = require("./env");
 
-/**
- * PostgreSQL connection pool
- * System of record for:
- * - Users
- * - Projects
- * - Workspaces
- * - Memberships / RBAC
- * - Jobs
- */
 const pool = new Pool({
   host: env.POSTGRES_HOST,
   port: env.POSTGRES_PORT,
@@ -25,9 +16,6 @@ const pool = new Pool({
   connectionTimeoutMillis: 2000
 });
 
-/**
- * Test connection on startup
- */
 const connectPostgres = async () => {
   try {
     const client = await pool.connect();
@@ -35,18 +23,15 @@ const connectPostgres = async () => {
     client.release();
     console.log("✅ PostgreSQL connected");
   } catch (error) {
-    console.error("❌ PostgreSQL connection failed");
+    console.error("PostgreSQL connection failed");
     console.error(error);
     process.exit(1);
   }
 };
 
-/**
- * Graceful shutdown
- */
 const disconnectPostgres = async () => {
   await pool.end();
-  console.log("🛑 PostgreSQL pool closed");
+  console.log("PostgreSQL pool closed");
 };
 
 module.exports = {

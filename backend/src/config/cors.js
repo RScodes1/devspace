@@ -1,10 +1,5 @@
 const cors = require("cors");
 
-/**
- * Allowed origins:
- * - In development: allow localhost
- * - In production: allow only frontend URLs from env
- */
 const allowedOrigins = (
   process.env.CORS_ORIGINS || ""
 )
@@ -14,12 +9,11 @@ const allowedOrigins = (
 
 const corsOptions = {
   origin: function (origin, callback) {
-    // Allow non-browser requests (Postman, curl)
+
     if (!origin) {
       return callback(null, true);
     }
-
-    // If no CORS_ORIGINS set, allow all (safe for local/dev)
+    
     if (allowedOrigins.length === 0) {
       return callback(null, true);
     }
@@ -43,8 +37,8 @@ const corsOptions = {
     "X-Idempotency-Key"
   ],
 
-  credentials: true, // allow cookies / auth headers
-  maxAge: 86400 // cache preflight for 24 hours
+  credentials: true,
+  maxAge: 86400
 };
 
 module.exports = cors(corsOptions);

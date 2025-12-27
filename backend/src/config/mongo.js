@@ -15,9 +15,9 @@ const connectMongo = async () => {
       autoIndex: env.NODE_ENV !== "production"
     });
 
-    console.log("✅ MongoDB connected");
+    console.log("MongoDB connected");
   } catch (error) {
-    console.error("❌ MongoDB connection failed");
+    console.error("MongoDB connection failed");
     console.error(error);
     process.exit(1);
   }
@@ -28,7 +28,7 @@ const connectMongo = async () => {
  */
 const disconnectMongo = async () => {
   await mongoose.connection.close();
-  console.log("🛑 MongoDB disconnected");
+  console.log("MongoDB disconnected");
 };
 
 module.exports = {

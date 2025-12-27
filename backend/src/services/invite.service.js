@@ -1,8 +1,5 @@
 const { pool } = require("../config/postgres");
 
-/**
- * Create an invite
- */
 const createInviteService = async (
   {email, role, expiresAt }, projectId,
   inviterId
@@ -22,9 +19,6 @@ const createInviteService = async (
   return result.rows[0];
 };
 
-/**
- * Get all invites for a project
- */
 const getProjectInvitesService = async (projectId, userId) => {
   const result = await pool.query(
     "SELECT * FROM invites WHERE project_id = $1 AND user_id=$2",
@@ -33,9 +27,6 @@ const getProjectInvitesService = async (projectId, userId) => {
   return result.rows;
 };
 
-/**
- * Accept invite
- */
 const acceptInviteService = async (userId, userEmail) => {
   // 1. Find invite by email
   const inviteRes = await pool.query(

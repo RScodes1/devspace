@@ -18,6 +18,13 @@ const app = express();
 app.use(cors);
 app.use(express.json());
 
+app.get("/", (req, res) => {
+  res.status(200).json({
+    message: "DevSpace Backend API is running",
+    docs: "/api/docs"
+  });
+});
+
 // Swagger
 app.use(
   "/api/docs",

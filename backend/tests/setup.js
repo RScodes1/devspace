@@ -1,5 +1,5 @@
 const { env } = require("../src/config/env");
-const { redisClient } = require("../src/config/redis");
+const { redis } = require("../src/config/redis");
 const pool = require("../src/config/postgres");
 
 beforeAll(async () => {
@@ -7,7 +7,7 @@ beforeAll(async () => {
   await pool.connect();
 
   // Connect to Redis
-  await redisClient.connect();
+  await redis.connect();
 
   console.log("Test setup complete");
 });
@@ -17,7 +17,7 @@ afterAll(async () => {
   await pool.end();
 
   // Disconnect Redis
-  await redisClient.quit();
+  await redis.quit();
 
   console.log("Test teardown complete");
 });
