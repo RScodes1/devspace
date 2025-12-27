@@ -9,8 +9,6 @@
 6. [Testing Instructions](#testing-instructions)
 7. [Deployment Instructions](#deployment-instructions)
 
----
-
 ## Architecture Overview
 
 DevSpace backend is designed as a **production-grade REST + WebSocket service** to support real-time collaborative coding.  
@@ -33,8 +31,8 @@ Express API Server ── WebSocket ──> Socket.io Events
 
  PostgreSQL (Projects, Memberships, Invites)
     MongoDB (Activity logs)
-   Redis (Cache, Job Queue)
- BullMQ Worker (Async code execution)
+    Redis (Cache, Job Queue)
+    BullMQ Worker (Async code execution)
 
  
 ## Setup & Run Instructions
@@ -44,7 +42,6 @@ Express API Server ── WebSocket ──> Socket.io Events
 git clone <your-repo-url>
 cd backend
  ```
-
 
  2. Install dependencies
  ```bash
@@ -75,7 +72,6 @@ npm run dev
 ```
 
 Swagger Docs: http://localhost:4500/api/docs
-
 WebSocket URL: ws://localhost:4500
 
 
@@ -152,7 +148,7 @@ npm run test:unit
 npm run test:integration
 ```
 
-Deployment Instructions
+## Deployment Instructions
 Using Render
 
 1. Dockerfile at project root.
