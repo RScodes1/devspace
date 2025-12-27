@@ -39,7 +39,16 @@ const { pool, connectPostgres, disconnectPostgres } = require("../src/config/pos
         updated_at TIMESTAMP DEFAULT NOW()
       );
     `);
-    
+
+    //   await pool.query(`
+    //    ALTER TABLE projects ADD COLUMN description VARCHAR(20) NULL
+    // `);
+
+    //       await pool.query(`
+    //    ALTER TABLE invites ADD COLUMN user_id INT NULL
+    // `);
+
+
     // Memberships
     await pool.query(`
       CREATE TABLE IF NOT EXISTS memberships (
