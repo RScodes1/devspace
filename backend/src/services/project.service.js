@@ -28,8 +28,26 @@ const createProjectService = async (userId, data) => {
   }
 }
 
-const getProjectService = async (projectId) => {
-  const result = await pool.query("SELECT * FROM projects WHERE id=$1", [projectId]);
+const getProjectsService = async(userId) => {
+ const result = await pool.query("SELECT * FROM projects WHERE owner_id=$1", [userId]);
+  return result.rows;
+}
+
+const getProjectService = async (projectId, userId) => {
+  const result = await pool.query(
+    `
+    SELECT 
+      p.*,
+      m.role AS user_role
+    FROM projects p
+    JOIN memberships m
+      ON m.project_id = p.id
+    WHERE p.id = $1
+      AND m.user_id = $2
+    `,
+    [projectId, userId]
+  );
+
   return result.rows[0];
 };
 
@@ -46,4 +64,4 @@ const deleteProjectService = async (projectId) => {
   return true;
 };
 
-module.exports = { createProjectService, getProjectService, updateProjectService, deleteProjectService };
+module.exports = { createProjectService, getProjectsService,  getProjectService, updateProjectService, deleteProjectService };

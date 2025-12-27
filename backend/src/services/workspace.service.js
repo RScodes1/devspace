@@ -14,6 +14,12 @@ const getWorkspaceService = async (workspaceId) => {
   return result.rows[0];
 };
 
+const getWorkspacesService = async (projectId) => {
+  const result = await pool.query("SELECT * FROM workspaces WHERE project_id=$1", [projectId]);
+  return result.rows;
+};
+
+
 const updateWorkspaceService = async (workspaceId, data) => {
   const result = await pool.query(
     "UPDATE workspaces SET name=$1 WHERE id=$2 RETURNING *",
@@ -27,4 +33,4 @@ const deleteWorkspaceService = async (workspaceId) => {
   return true;
 };
 
-module.exports = { createWorkspaceService, getWorkspaceService, updateWorkspaceService, deleteWorkspaceService };
+module.exports = { createWorkspaceService,  getWorkspacesService,getWorkspaceService, updateWorkspaceService, deleteWorkspaceService };

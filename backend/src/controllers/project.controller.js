@@ -1,4 +1,4 @@
-const { createProjectService, getProjectService, updateProjectService, deleteProjectService } = require("../services/project.service");
+const { createProjectService, getProjectService, updateProjectService, deleteProjectService, getProjectsService } = require("../services/project.service");
 
 const createProject = async (req, res, next) => {
   try {
@@ -11,13 +11,25 @@ const createProject = async (req, res, next) => {
 
 const getProject = async (req, res, next) => {
   try {
-    const project = await getProjectService(req.params.id);
+    const project = await getProjectService(req.params.id, req.user.id);
     if (!project) return res.status(404).json({ success: false, message: "Project not found" });
     res.status(200).json({ success: true, project });
   } catch (err) {
     next(err);
   }
 };
+
+const getProjects = async (req, res, next) => {
+
+  try {
+    const project = await getProjectsService(req.user.id);
+    if (!project) return res.status(404).json({ success: false, message: "Projects not found" });
+    res.status(200).json({ success: true, project });
+  } catch (err) {
+    next(err);
+  }
+};
+
 
 const updateProject = async (req, res, next) => {
   try {
@@ -37,4 +49,4 @@ const deleteProject = async (req, res, next) => {
   }
 };
 
-module.exports = { createProject, getProject, updateProject, deleteProject };
+module.exports = { createProject, getProject, updateProject, getProjects, deleteProject };

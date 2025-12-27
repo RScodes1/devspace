@@ -1,7 +1,7 @@
 const express = require("express");
 const { authMiddleware } = require("../middlewares/auth.middleware");
 const { rbac } = require("../middlewares/rbac.middleware");
-const { createProject, getProject, updateProject, deleteProject } = require("../controllers/project.controller");
+const { createProject, getProject, updateProject, deleteProject, getProjects } = require("../controllers/project.controller");
 const { validateBody } = require("../middlewares/validate.middleware");
 const { createProjectSchema } = require("../validations/project.schema");
 const { projectContext } = require("../middlewares/projectContext.middleware");
@@ -25,6 +25,16 @@ router.post("/", validateBody(createProjectSchema), createProject); // done
  *     tags: [Projects]
  */
 router.get("/:id",  projectContext, rbac(["Owner", "Collaborator"]), getProject); // done 
+
+/**
+ * @swagger
+ * /projects:
+ *   get:
+ *     summary: Get projects
+ *     tags: [Projects]
+ */
+router.get("/", getProjects); // done 
+
 
 /**
  * @swagger

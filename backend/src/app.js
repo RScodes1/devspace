@@ -19,7 +19,7 @@ const app = express();
 // Middlewares
 app.use(cors);
 app.use(express.json());
-app.use(apiRateLimiter);
+// app.use(authRateLimiter);
 
 // Swagger Docs
 app.use("/api/docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));

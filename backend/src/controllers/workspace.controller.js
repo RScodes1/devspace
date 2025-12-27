@@ -1,4 +1,4 @@
-const { createWorkspaceService, getWorkspaceService, updateWorkspaceService, deleteWorkspaceService } = require("../services/workspace.service");
+const { createWorkspaceService, getWorkspacesService,  getWorkspaceService, updateWorkspaceService, deleteWorkspaceService } = require("../services/workspace.service");
 
 const createWorkspace = async (req, res, next) => {
   try {
@@ -19,6 +19,17 @@ const getWorkspace = async (req, res, next) => {
   }
 };
 
+const getWorkspaces = async (req, res, next) => {
+  try {
+    const workspaces = await getWorkspacesService(req.params.projectId);
+    if (!workspaces) return res.status(404).json({ success: false, message: "Workspaces not found" });
+    res.status(200).json({ success: true, workspaces });
+  } catch (err) {
+    next(err);
+  }
+};
+
+
 const updateWorkspace = async (req, res, next) => {
   try {
     const workspace = await updateWorkspaceService(req.params.id, req.body);
@@ -37,4 +48,4 @@ const deleteWorkspace = async (req, res, next) => {
   }
 };
 
-module.exports = { createWorkspace, getWorkspace, updateWorkspace, deleteWorkspace };
+module.exports = { createWorkspace, getWorkspace, getWorkspaces,  updateWorkspace, deleteWorkspace };
