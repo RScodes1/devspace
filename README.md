@@ -103,93 +103,70 @@ WebSocket URL: ws://localhost:4500
 
 - **Redis** – cache and queue performance.
 
-Trade-offs:
+### Trade-offs:
 
-WebSocket events are mocked (cursor/file change) due to assignment scope.
+- WebSocket events are mocked (cursor/file change) due to assignment scope.
+- Frontend is not included; evaluation relies on Swagger docs and API correctness.
 
-Frontend is not included; evaluation relies on Swagger docs and API correctness.
+## Scalability Considerations 
 
-Scalability Considerations
+- **Horizontal Scaling**: Node.js server can be replicated behind a load balancer.
 
-Horizontal Scaling: Node.js server can be replicated behind a load balancer.
+- **Redis**: Pub/Sub for event distribution; scales across multiple instances.
 
-Redis: Pub/Sub for event distribution; scales across multiple instances.
+- **Job Queue**: BullMQ with Redis supports distributed workers.
 
-Job Queue: BullMQ with Redis supports distributed workers.
+- **Database Indexing**: Ensures fast lookups for projects, memberships.
 
-Database Indexing: Ensures fast lookups for projects, memberships.
+- **Async I/O**: Non-blocking APIs handle high concurrency.
 
-Async I/O: Non-blocking APIs handle high concurrency.
-
-API Documentation
-
-All API endpoints are documented with Swagger / OpenAPI 3.0.
-
-Access locally:
-http://localhost:4500/api/docs
-
-Main endpoints:
-
-POST /api/auth/signup – Create user
-
-POST /api/auth/login – Authenticate user
-
-POST /api/projects – Create project
-
-GET /api/projects – List projects
-
-POST /api/projects/:projectId/workspaces/:workspaceId/execute – Async code execution
-
-GET /api/projects/:projectId/workspaces/jobs/:jobId – Job status
-
-Real-time events via WebSocket (userJoined, userLeft, activity)
-
-
-API Documentation
+## API Documentation 
 
 All API endpoints are documented with Swagger / OpenAPI 3.0.
 
-Access locally:
-http://localhost:4500/api/docs
+***Access locally:***
+[http://localhost:4500/api/docs]
 
-Main endpoints:
+**Main endpoints:**
 
-POST /api/auth/signup – Create user
+- **POST /api/auth/signup** – Create user
 
-POST /api/auth/login – Authenticate user
+- **POST /api/auth/login** – Authenticate user
 
-POST /api/projects – Create project
+- **POST /api/projects** – Create project
 
-GET /api/projects – List projects
+- **GET /api/projects** – List projects
 
-POST /api/projects/:projectId/workspaces/:workspaceId/execute – Async code execution
+- **POST /api/projects/:projectId/workspaces/:workspaceId/execute** – Async code execution
 
-GET /api/projects/:projectId/workspaces/jobs/:jobId – Job status
+- **GET /api/projects/:projectId/workspaces/jobs/:jobId** – Job status
 
-Real-time events via WebSocket (userJoined, userLeft, activity)
+- **Real-time events via WebSocket** (userJoined, userLeft, activity)
 
 
-Testing Instructions
-Unit Tests
+### Testing Instructions
+**Unit Tests**
+
+```bash
 npm run test:unit
+```
+**Integration Tests**
 
-Integration Tests
+```bash
 npm run test:integration
+```
 
 Deployment Instructions
 Using Render
 
-Dockerfile at project root.
+1. Dockerfile at project root.
 
-Environment Variables set in Render dashboard.
+2. Environment Variables set in Render dashboard.
 
-Deploy:
-
-Connect GitHub repo
-
-Select branch
-
-Build and deploy
+3. Deploy:
+  Connect GitHub repo
+  Select branch
+  Build and deploy
 
 Swagger docs live:
-https://<your-render-service>.onrender.com/api/docs
+[https://(https://devspace-yck7.onrender.com/)/api/docs]
