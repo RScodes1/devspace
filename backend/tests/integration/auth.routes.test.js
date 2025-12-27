@@ -32,4 +32,10 @@ describe("Auth Routes Integration Tests", () => {
     expect(response.body).toHaveProperty("token");
     expect(response.body).toHaveProperty("refreshToken");
   });
+
+  test("GET /api/projects without token should return 401", async () => {
+  const res = await request(app).get("/api/projects");
+  expect(res.statusCode).toBe(401);
+});
+
 });

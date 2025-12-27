@@ -1,6 +1,7 @@
 const { redis } = require("../config/redis");
 const { Server } = require("socket.io");
 const { createAdapter } = require("@socket.io/redis-adapter");
+const logger = require("../utils/logger");
 
 /**
  * Create Redis adapter for Socket.IO
@@ -11,7 +12,7 @@ const setupRedisAdapter = (io) => {
 
   io.adapter(createAdapter(pubClient, subClient));
 
-  console.log("✅ Socket.IO Redis adapter configured");
+  logger.info("✅ Socket.IO Redis adapter configured");
 };
 
 module.exports = { setupRedisAdapter };

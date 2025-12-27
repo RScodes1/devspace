@@ -1,5 +1,4 @@
 const swaggerJSDoc = require("swagger-jsdoc");
-const swaggerUi = require("swagger-ui-express");
 const { env } = require("./env");
 
 const swaggerOptions = {
@@ -8,55 +7,25 @@ const swaggerOptions = {
     info: {
       title: "DevSpace API",
       version: "1.0.0",
-      description:
-        "DevSpace – Real-Time Collaborative Workspace Backend API",
-      contact: {
-        name: "DevSpace Backend"
-      }
+      description: "Real-Time Collaborative Workspace Backend API",
     },
     servers: [
       {
-        url: env.API_BASE_URL || "http://localhost:4500/api/v1",
-        description: "API Server"
-      }
+        url: env.API_BASE_URL || "http://localhost:4500",
+      },
     ],
     components: {
       securitySchemes: {
         bearerAuth: {
           type: "http",
           scheme: "bearer",
-          bearerFormat: "JWT"
-        }
-      }
+          bearerFormat: "JWT",
+        },
+      },
     },
-    security: [
-      {
-        bearerAuth: []
-      }
-    ]
+    security: [{ bearerAuth: [] }],
   },
-  apis: [
-    "./src/routes/**/*.js",
-    "./src/models/**/*.js"
-  ]
+  apis: ["./src/routes/**/*.js"],
 };
 
-const swaggerSpec = swaggerJSDoc(swaggerOptions);
-
-/**
- * Swagger setup function
- */
-function setupSwagger(app) {
-  app.use(
-    "/api/docs",
-    swaggerUi.serve,
-    swaggerUi.setup(swaggerSpec, {
-      explorer: true,
-      swaggerOptions: {
-        persistAuthorization: true
-      }
-    })
-  );
-}
-
-module.exports = setupSwagger;
+module.exports = swaggerJSDoc(swaggerOptions);

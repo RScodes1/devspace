@@ -27,14 +27,14 @@ const refreshToken = async (req, res, next) => {
   }
 };
 
-const getUsers = async (req, res, next) => {
+// const getUsers = async (req, res, next) => {
 
-  try {
-    const users = await getUsers();
-    res.status(200).json({ success: true, token: users });
-  } catch (err) {
-    next(err);
-  }
+//   try {
+//     const users = await getUsers();
+//     res.status(200).json({ success: true, token: users });
+//   } catch (err) {
+//     next(err);
+//   }
 
-}
-module.exports = { signup, login, refreshToken, getUsers };
+// }
+module.exports = { signup, login, refreshToken };

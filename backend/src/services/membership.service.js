@@ -1,6 +1,6 @@
 const {pool} = require("../config/postgres");
 
-const addMemberService = async ({ userId, projectId, role }) => {
+const addMemberService = async (projectId, { userId, role }) => {
   const result = await pool.query(
     "INSERT INTO memberships (user_id, project_id, role) VALUES ($1, $2, $3) RETURNING *",
     [userId, projectId, role]
@@ -21,7 +21,7 @@ const removeMemberService = async (membershipId) => {
   return true;
 };
 
-const getMembersService = async (userId,projectId) => {
+const getMembersService = async (projectId) => {
    const result = await pool.query(
     `
     SELECT
@@ -30,11 +30,12 @@ const getMembersService = async (userId,projectId) => {
       u.email,
       m.role
     FROM memberships m
-    JOIN users u ON u.id = m.user_id
+    LEFT JOIN users u ON u.id = m.user_id
     WHERE m.project_id = $1
     `,
     [projectId]
   );
+  console.log({result});
   return result.rows;
 }
 

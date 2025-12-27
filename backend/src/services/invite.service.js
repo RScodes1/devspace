@@ -4,17 +4,19 @@ const { pool } = require("../config/postgres");
  * Create an invite
  */
 const createInviteService = async (
-  { id, email, role, expiresAt }, projectId,
+  {email, role, expiresAt }, projectId,
   inviterId
 ) => {
- 
+      const user = await pool.query("SELECT id FROM users WHERE email = $1", [email]);
+      const userId = user.rows[0]?.id || null;
+
   const result = await pool.query(
     `
     INSERT INTO invites (email, project_id, role, user_id)
     VALUES ($1, $2, $3, $4)
     RETURNING *
     `,
-    [email, projectId, role || null, id]
+    [email, projectId, role || null, userId]
   );
 
   return result.rows[0];

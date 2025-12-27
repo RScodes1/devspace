@@ -1,7 +1,6 @@
 const {pool} = require("../config/postgres");
 
 const createWorkspaceService = async (name, projectId) => {
-
   const result = await pool.query(
     "INSERT INTO workspaces (name, project_id) VALUES ($1, $2) RETURNING *",
     [name, projectId]

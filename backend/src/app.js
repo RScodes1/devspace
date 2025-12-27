@@ -1,13 +1,11 @@
-// src/app.js
 const express = require("express");
 const cors = require("./config/cors");
 const swaggerUi = require("swagger-ui-express");
 const swaggerSpec = require("./config/swagger");
-const { apiRateLimiter, authRateLimiter } = require("./config/rateLimiter");
 const { errorMiddleware } = require("./middlewares/error.middleware");
 const { authMiddleware } = require("./middlewares/auth.middleware");
 
-// Route imports
+// Routes
 const authRoutes = require("./routes/auth.routes");
 const projectRoutes = require("./routes/project.routes");
 const workspaceRoutes = require("./routes/workspace.routes");
@@ -19,10 +17,18 @@ const app = express();
 // Middlewares
 app.use(cors);
 app.use(express.json());
-// app.use(authRateLimiter);
 
-// Swagger Docs
-app.use("/api/docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
+// Swagger
+app.use(
+  "/api/docs",
+  swaggerUi.serve,
+  swaggerUi.setup(swaggerSpec, {
+    explorer: true,
+    swaggerOptions: {
+      persistAuthorization: true,
+    },
+  })
+);
 
 // Routes
 app.use("/api/auth", authRoutes);
@@ -35,4 +41,5 @@ app.use("/api/projects/:projectId/members", authMiddleware, membershipRoutes);
 app.use(errorMiddleware);
 
 module.exports = app;
+
 

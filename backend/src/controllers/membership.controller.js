@@ -2,7 +2,7 @@ const { addMemberService, updateRoleService,getMembersService,  removeMemberServ
 
 const addMember = async (req, res, next) => {
   try {
-    const member = await addMemberService(req.body);
+    const member = await addMemberService(req.params.projectId, req.body);
     res.status(201).json({ success: true, member });
   } catch (err) {
     next(err);
@@ -11,7 +11,7 @@ const addMember = async (req, res, next) => {
 
 const updateRole = async (req, res, next) => {
   try {
-    const member = await updateRoleService(req.params.projectId, req.params.id, req.body.role);
+    const member = await updateRoleService(req.params.projectId, req.params.userId, req.body.role);
     res.status(200).json({ success: true, member });
   } catch (err) {
     next(err);
@@ -29,7 +29,7 @@ const removeMember = async (req, res, next) => {
 
 const getMembers = async (req, res, next) => {
   try { 
-    const data = await getMembersService(req.user.id, req.params.projectId);
+    const data = await getMembersService(req.params.projectId);
     res.status(200).json({ success: true, message: "All members", data });
   } catch (err) {
      next(err);
