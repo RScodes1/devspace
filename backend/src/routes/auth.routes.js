@@ -39,7 +39,7 @@ router.post(
 
 /**
  * @swagger
- * /auth/login:
+ * /api/auth/login:
  *   post:
  *     summary: Login user
  *     tags: [Auth]
@@ -72,7 +72,7 @@ router.post(
 
 /**
  * @swagger
- * /auth/refresh:
+ * /api/auth/refresh:
  *   post:
  *     summary: Refresh JWT token
  *     tags: [Auth]
