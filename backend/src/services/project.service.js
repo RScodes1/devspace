@@ -13,7 +13,7 @@ const createProjectService = async (userId, data) => {
 
     const project = projectResult.rows[0];
  
-    const res =  await addMemberService({userId, projectId: project.id, role : 'Owner'})
+    const res =  await addMemberService(project.id,{ userId,  role : 'Owner'})
      if (res){
        await client.query('COMMIT');
      return project;

@@ -11,12 +11,15 @@ const projectRoutes = require("./routes/project.routes");
 const workspaceRoutes = require("./routes/workspace.routes");
 const inviteRoutes = require("./routes/invite.routes");
 const membershipRoutes = require("./routes/membership.routes");
+const { apiRateLimiter, authRateLimiter } = require("./config/rateLimiter");
 
 const app = express();
 
 // Middlewares
 app.use(cors);
 app.use(express.json());
+app.use(apiRateLimiter);
+app.use(authRateLimiter);
 
 app.get("/", (req, res) => {
   res.status(200).json({
