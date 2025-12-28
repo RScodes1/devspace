@@ -161,4 +161,5 @@ Using Render
   Build and deploy
 
 Swagger docs live:
-[https://(https://devspace-yck7.onrender.com/)/api/docs]
+
+[https://devspace-iy1o.onrender.com]
