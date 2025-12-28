@@ -43,7 +43,6 @@ const router = express.Router();
  */
 router.post(
   "/",
-  
   validateBody(createProjectSchema),
   createProject
 );

@@ -4,6 +4,7 @@ const { addMemberService } = require("./membership.service");
 const createProjectService = async (userId, data) => {
    const client = await pool.connect();
    try {
+      console.log({userId});
       const projectResult = await client.query(
 
      "INSERT INTO projects (name, description, owner_id) VALUES ($1, $2, $3) RETURNING *",

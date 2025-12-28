@@ -1,7 +1,9 @@
 const Redis = require("ioredis");
 const { env } = require("./env");
 
-const redis = new Redis(env.REDIS_URL, {
+ const url = env.REDIS_URL;
+ 
+const redis = new Redis(url, {
   maxRetriesPerRequest: null,
   enableReadyCheck: true
 });
