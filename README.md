@@ -162,4 +162,4 @@ Using Render
 
 Swagger docs live:
 
-[https://devspace-iy1o.onrender.com]
+[https://devspace-iy1o.onrender.com/api/docs]
